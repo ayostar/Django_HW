@@ -69,6 +69,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'website.wsgi.application'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATABASES = {
     'default': {
@@ -102,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'RU-ru'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Moscow'
 
