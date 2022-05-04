@@ -14,8 +14,8 @@ Content-Type: application/json
 Authorization: Token 68452112cd1507ee4f4ea3461d9a01db4043fe13
 
 {
-  "title": "Продам всякую всячину",
-  "description": "Все очень б/у"
+  "title": "Добрый вечер",
+  "description": "Контрольная закупка"
 }
 
 ###
