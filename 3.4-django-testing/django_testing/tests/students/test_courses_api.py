@@ -2,6 +2,7 @@ import pytest
 from rest_framework.test import APIClient
 from model_bakery import baker
 import random
+from random import randint
 from students.models import Course, Student
 
 api_url = '/api/v1/courses/'
@@ -28,17 +29,30 @@ def student_factory():
     return factory
 
 
-@pytest.mark.django_db
-def test_get_course(client, course_factory):
-    course = course_factory()
+# @pytest.mark.django_db
+# def test_get_course(client, course_factory):
+#     course = course_factory()
+#
+#     response = client.get(api_url)
+#
+#     assert response.status_code == 200
+#
+#     data = response.json()
+#     assert len(data) == 1
+#     assert course.name == data[0]['name']
 
-    response = client.get(api_url)
+
+@pytest.mark.django_db
+def test_get_one_course(client, course_factory):
+    courses = course_factory(_quantity=1)
+    course_id = courses[0].id
+
+    response_url = f'{api_url}{course_id}/'
+    response = client.get(response_url)
 
     assert response.status_code == 200
-
     data = response.json()
-    assert len(data) == 1
-    assert course.name == data[0]['name']
+    assert data['name'] == courses[0].name
 
 
 @pytest.mark.django_db
@@ -113,11 +127,11 @@ def test_update_course(client, course_factory, student_factory):
 
 
 @pytest.mark.django_db
-def test_delete_course(client, course_factory):
+def test_delete_course(client, course_factory, student_factory):
     students = student_factory(_quantity=10)
     student_ids = [student.id for student in students]
     course = course_factory()
-    course.students.add(student_ids)
+    course.students.add(*student_ids)
     response_url = f'{api_url}{course.id}/'
 
     response = client.delete(response_url)
